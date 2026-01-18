@@ -2,16 +2,19 @@
 # Smart Hyperparameter Sweep
 # Baseline LR: 5e-5
 
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 configs=(
     # ========== Phase 1: Baseline ==========
     "1.0 0.5 0.7 5e-5"   # baseline
     
-    # ========== Phase 2: Vary BETA (temp annealing) ==========
+    # ========== Phase 2: Vary RHO (reward mixing) ==========
+    "1.0 0.5 0.8 5e-5"   # more reward mixing
+    
+    # ========== Phase 3: Vary BETA (temp annealing) ==========
     "0.8 0.3 0.7 5e-5"   # lower temps, sharper
     "0.5 0.5 0.7 5e-5"   # constant temp (no annealing)
-    
-    # ========== Phase 3: Vary RHO (reward mixing) ==========
-    "1.0 0.5 0.8 5e-5"   # more reward mixing
     
     # ========== Phase 4: Vary LR ==========
     "1.0 0.5 0.7 1e-5"   # lower lr
@@ -28,7 +31,7 @@ for i in "${!configs[@]}"; do
     echo "[$((i+1))/${#configs[@]}] beta_max=$ROUTER_BETA_MAX beta_min=$ROUTER_BETA_MIN rho=$ROUTER_RHO lr=$ROUTER_LR"
     echo "========================================"
     
-    ./run_3b.sh
+    "$SCRIPT_DIR/run_3b.sh"
 done
 
 echo "All experiments completed!"
