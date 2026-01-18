@@ -15,12 +15,11 @@ export ROUTER_LR=${ROUTER_LR:-5e-5}
 export EXPERIMENT_NAME="arm-3B-${N_GPUS}gpu-bmax${ROUTER_BETA_MAX}-bmin${ROUTER_BETA_MIN}-r${ROUTER_RHO}-lr${ROUTER_LR}"
 
 export VLLM_ATTENTION_BACKEND=XFORMERS
-export WANDB_API_KEY='ac6e358c9e02e44fdccee1c0c68e4a7ea095bafb'
 export WANDB_MODE=offline
 export WANDB_CONSOLE=wrap
 export WANDB_PROJECT='ER'
 export WANDB_ENTITY='ER_ver2'
-export HF_TOKEN='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'
+
 export RAY_memory_usage_threshold=0.99
 gsm8k_train_path=$DATA_DIR/gsm8k_train.parquet
 gsm8k_test_path=$DATA_DIR/gsm8k_test.parquet
