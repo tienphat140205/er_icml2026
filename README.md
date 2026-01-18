@@ -6,10 +6,28 @@
 cd /path/to/er_icml2026
 
 # Step 1: Setup environment (first time only)
-bash env.sh
+conda env create -f environment/verl_env.yaml
+conda activate arm_verl
+pip3 install --force-reinstall torch==2.4.0 --index-url https://download.pytorch.org/whl/cu124
+pip3 install flash-attn --no-build-isolation
+pip3 install --upgrade math-verify
 
 # Step 2: Run hyperparameter sweep
 bash verl/stage2_scripts/trainer/run_sweep.sh
+```
+
+## Docker Setup (Alternative)
+
+```bash
+cd /path/to/er_icml2026
+
+# Build image
+docker build -t arm-train .
+
+# Run training
+docker run --gpus all -it --shm-size=16g \
+  -v $(pwd):/workspace \
+  arm-train bash verl/stage2_scripts/trainer/run_sweep.sh
 ```
 
 ## Hyperparameter Sweep
