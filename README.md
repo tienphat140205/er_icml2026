@@ -12,7 +12,11 @@ pip3 install --force-reinstall torch==2.4.0 --index-url https://download.pytorch
 pip3 install flash-attn --no-build-isolation
 pip3 install --upgrade math-verify
 
-# Step 2: Run hyperparameter sweep
+# Step 2: Export your API keys (optional, for sync/push)
+export WANDB_API_KEY=your_wandb_key
+export HF_TOKEN=your_huggingface_token
+
+# Step 3: Run hyperparameter sweep
 bash verl/stage2_scripts/trainer/run_sweep.sh
 ```
 

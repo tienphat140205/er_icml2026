@@ -19,6 +19,9 @@ export WANDB_MODE=offline
 export WANDB_CONSOLE=wrap
 export WANDB_PROJECT='ER'
 export WANDB_ENTITY='ER_ver2'
+export WANDB_API_KEY=${WANDB_API_KEY:-""}
+export HF_TOKEN=${HF_TOKEN:-""}
+export HF_REPO="tp140205/${EXPERIMENT_NAME}"
 
 export RAY_memory_usage_threshold=0.99
 gsm8k_train_path=$DATA_DIR/gsm8k_train.parquet
@@ -101,5 +104,6 @@ python3 -m verl.trainer.my_ppo \
     trainer.save_freq=25 \
     trainer.test_freq=25 \
     trainer.total_epochs=3 \
+    +trainer.push_to_hub=$HF_REPO \
     $@
 
