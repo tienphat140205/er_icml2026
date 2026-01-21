@@ -15,14 +15,11 @@ export ROUTER_LR=${ROUTER_LR:-5e-5}
 export EXPERIMENT_NAME="arm-3B-${N_GPUS}gpu-bmax${ROUTER_BETA_MAX}-bmin${ROUTER_BETA_MIN}-r${ROUTER_RHO}-lr${ROUTER_LR}"
 
 export VLLM_ATTENTION_BACKEND=XFORMERS
-export WANDB_MODE=offline
+export WANDB_MODE=online
 export WANDB_CONSOLE=wrap
 export WANDB_PROJECT='ER'
 export WANDB_ENTITY='ER_ver2'
-export WANDB_API_KEY=${WANDB_API_KEY:-""}
-export HF_TOKEN=${HF_TOKEN:-""}
 export HF_REPO="tp140205/${EXPERIMENT_NAME}"
-
 export RAY_memory_usage_threshold=0.99
 gsm8k_train_path=$DATA_DIR/gsm8k_train.parquet
 gsm8k_test_path=$DATA_DIR/gsm8k_test.parquet
@@ -101,9 +98,10 @@ python3 -m verl.trainer.my_ppo \
     trainer.experiment_name=$EXPERIMENT_NAME \
     trainer.n_gpus_per_node=$N_GPUS \
     trainer.nnodes=1 \
-    trainer.save_freq=25 \
+    trainer.save_freq=30 \
     trainer.test_freq=25 \
     trainer.total_epochs=3 \
     +trainer.push_to_hub=$HF_REPO \
+    +trainer.run_final_test=False
     $@
 
